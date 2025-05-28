@@ -258,8 +258,9 @@ export class CountSDK {
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      const responseData = error.response.data as any;
+      const responseData = error.response.data as Record<string, unknown>;
       return {
+        // @ts-expect-error - error.response.data implicitly has an 'any' type so this is a local solution
         message: responseData?.error || fallbackMessage,
         status: error.response.status,
         originalError: error,
